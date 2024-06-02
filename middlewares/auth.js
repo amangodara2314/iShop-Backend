@@ -3,6 +3,7 @@ const SECRET_KEY = "ishop2314";
 
 function restrictedToLoggedInUserOnly(req, res, next) {
   const token = req.cookies.ishopAdminToken;
+  console.log(req.cookies);
 
   if (!token)
     return res.status(401).send({ msg: "Access denied. No token provided." });

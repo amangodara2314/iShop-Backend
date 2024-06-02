@@ -4,7 +4,6 @@ class CartController {
   stateToCart(id, data) {
     return new Promise(async (res, rej) => {
       try {
-        console.log(data);
         for (const d of data) {
           const existingCart = await Cart.findOne({
             user_id: id,
