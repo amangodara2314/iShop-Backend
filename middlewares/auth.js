@@ -7,7 +7,7 @@ function restrictedToLoggedInUserOnly(req, res, next) {
   if (authHeader && authHeader.startsWith("Bearer ")) {
     token = authHeader.split(" ")[1];
   } else {
-    res.status(401).send("Unauthorized");
+    return res.status(401).send("Unauthorized");
   }
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
