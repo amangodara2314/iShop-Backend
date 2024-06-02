@@ -2,12 +2,13 @@ const jwt = require("jsonwebtoken");
 const SECRET_KEY = "ishop2314";
 
 function restrictedToLoggedInUserOnly(req, res, next) {
-  const token = req.cookies.ishopAdminToken;
-  console.log(req.cookies);
-
-  if (!token)
-    return res.status(401).send({ msg: "Access denied. No token provided." });
-
+  const authHeader = req.headers["authorization"];
+  let token;
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    token = authHeader.split(" ")[1];
+  } else {
+    res.status(401).send("Unauthorized");
+  }
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
     req.user = decoded;
