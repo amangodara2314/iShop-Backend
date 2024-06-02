@@ -4,18 +4,20 @@ class CartController {
   stateToCart(id, data) {
     return new Promise(async (res, rej) => {
       try {
+        console.log(data);
         for (const d of data) {
           const existingCart = await Cart.findOne({
             user_id: id,
             pId: d.pId,
           });
+
           if (existingCart) {
             await Cart.updateOne(
               { user_id: id, pId: d.pId },
               { qty: existingCart.qty + d.qty }
             );
           } else {
-            new Cart({
+            await new Cart({
               user_id: id,
               pId: d.pId,
               qty: d.qty,
